@@ -52,6 +52,26 @@ $endif$
     this.$member.fieldName$ = $if(gen.generateInterfaces)$$member.castFromInterface$$endif$$member.fieldName$;
     $endif$
     $member.fieldName$__is_set = true;
+
+    $if(gen.generateSetFieldsToNull)$
+    $if(!member.booleanJavaType && !member.intJavaType && !member.floatJavaType && !member.doubleJavaType && !member.byteJavaType)$
+    /**
+    * Added logic to fix SF bug where they don't support setting null per the WSDL spec.
+    */
+    if (this.$member.fieldName$ == null) {
+        java.util.List<String> list = new java.util.ArrayList<>();
+        java.util.Collections.addAll(list, getFieldsToNull());
+        list.add("$member.fieldName$");
+        setFieldsToNull(list.toArray(new String[0]));
+    \} else {
+        java.util.List<String> list = new java.util.ArrayList<>();
+        java.util.Collections.addAll(list, getFieldsToNull());
+        if (list.remove("$member.fieldName$")){
+            setFieldsToNull(list.toArray(new String[0]));
+        \}
+    \}
+    $endif$
+    $endif$
   \}
 
   protected void $member.setMethodName$(com.sforce.ws.parser.XmlInputStream __in,

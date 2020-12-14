@@ -9,7 +9,7 @@
   <groupId>com.force.api</groupId>
   <artifactId>force-wsc</artifactId>
   <packaging>jar</packaging>
-  <version>50.0.0</version>
+  <version>50.0.0.QSD-1</version>
   <name>force-wsc</name>
   <description>Force.com Web Service Connector</description>
   <url>http://www.force.com</url>
@@ -208,20 +208,20 @@
         </executions>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>package</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-gpg-plugin</artifactId>-->
+<!--        <version>1.6</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>sign-artifacts</id>-->
+<!--            <phase>package</phase>-->
+<!--            <goals>-->
+<!--              <goal>sign</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
 
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>

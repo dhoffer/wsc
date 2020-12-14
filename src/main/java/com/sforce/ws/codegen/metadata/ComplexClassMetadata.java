@@ -32,6 +32,7 @@ public class ComplexClassMetadata extends ClassMetadata {
     private final boolean generateInterfaces;
     private final String typeExtension;
     private final String baseComplexClass;
+    private final boolean generateSetFieldsToNull;
 
     public ComplexClassMetadata(String packageName, String className, String typeExtension, String xsiType,
                                 String superWrite, String superLoad, String superToString, List<MemberMetadata> memberMetadataList,
@@ -45,6 +46,11 @@ public class ComplexClassMetadata extends ClassMetadata {
         this.memberMetadataList = memberMetadataList;
         this.generateInterfaces = generateInterfaces;
         this.baseComplexClass = baseComplexClass;
+        this.generateSetFieldsToNull = baseComplexClass != null && baseComplexClass.endsWith("SObject");
+    }
+
+    public boolean getGenerateSetFieldsToNull() {
+        return generateSetFieldsToNull;
     }
 
     public String getXsiType() {
@@ -72,12 +78,13 @@ public class ComplexClassMetadata extends ClassMetadata {
     }
 
     private final static int MAX_SPLIT_SIZE = 500;
+
     public List<List<MemberMetadata>> getSplitMemberMetadataList() {
         int start = 0;
         int end = 0;
-        ArrayList<List<MemberMetadata>> result = new ArrayList<>(1+(memberMetadataList.size()/MAX_SPLIT_SIZE));
+        ArrayList<List<MemberMetadata>> result = new ArrayList<>(1 + (memberMetadataList.size() / MAX_SPLIT_SIZE));
         while (start < memberMetadataList.size()) {
-            end = Math.min(start+MAX_SPLIT_SIZE, memberMetadataList.size());
+            end = Math.min(start + MAX_SPLIT_SIZE, memberMetadataList.size());
             result.add(memberMetadataList.subList(start, end));
             start = end;
         }
@@ -99,29 +106,29 @@ public class ComplexClassMetadata extends ClassMetadata {
             return "implements " + getInterfaceName();
         }
     }
-    
+
     public boolean getHasBaseComplexClass() {
-    	return baseComplexClass != null;
+        return baseComplexClass != null;
     }
-    
+
     public String getBaseComplexClass() {
-    	return baseComplexClass;
+        return baseComplexClass;
     }
-    
+
     public String getBaseComplexClassInterface() {
-    	if (baseComplexClass == null) {
-    		return null;
-    	}
-    	int position = baseComplexClass.lastIndexOf(".");
-    	return baseComplexClass.substring(0, position + 1) + "I" + baseComplexClass.substring(position + 1);
+        if (baseComplexClass == null) {
+            return null;
+        }
+        int position = baseComplexClass.lastIndexOf(".");
+        return baseComplexClass.substring(0, position + 1) + "I" + baseComplexClass.substring(position + 1);
     }
-    
+
     public boolean getHasArrayField() {
-    	for (MemberMetadata m : this.memberMetadataList) {
-    		if (m.getIsArray()) {
-    			return true;
-    		}
-    	}
-    	return false;
+        for (MemberMetadata m : this.memberMetadataList) {
+            if (m.getIsArray()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
